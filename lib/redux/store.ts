@@ -1,31 +1,16 @@
-/* Core */
-import { configureStore, type ThunkAction, type Action } from '@reduxjs/toolkit'
-import {
-  useSelector as useReduxSelector,
-  useDispatch as useReduxDispatch,
-  type TypedUseSelectorHook,
-} from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './slices/cart-slice';
+import productReducer from './slices/product-slice';
+import { middleware } from '@/lib/redux/middleware';
 
-/* Instruments */
-import { reducer } from './rootReducer'
-import { middleware } from './middleware'
-
-export const reduxStore = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(middleware)
+const store = configureStore({
+  reducer: {
+    cart: cartReducer,
+    product: productReducer,
   },
-})
-export const useDispatch = () => useReduxDispatch<ReduxDispatch>()
-export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(middleware);
+  },
+});
 
-/* Types */
-export type ReduxStore = typeof reduxStore
-export type ReduxState = ReturnType<typeof reduxStore.getState>
-export type ReduxDispatch = typeof reduxStore.dispatch
-export type ReduxThunkAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  ReduxState,
-  unknown,
-  Action
->
+export default store;

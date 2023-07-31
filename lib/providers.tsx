@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 /* Core */
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import store from '@/lib/redux/store';
 
 /* Instruments */
-import { reduxStore } from '@/lib/redux'
 
 export const Providers = (props: React.PropsWithChildren) => {
-  return <Provider store={reduxStore}>{props.children}</Provider>
-}
+  return <Provider store={store}>{props.children}</Provider>;
+};
